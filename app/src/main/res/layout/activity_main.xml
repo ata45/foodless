@@ -14,8 +14,6 @@
         android:layout_centerVertical="true"
         android:orientation="vertical">
 
-        <Imag
-
         <ImageView
             android:id="@+id/logo"
             android:layout_width="100dp"
