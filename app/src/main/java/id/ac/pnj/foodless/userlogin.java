@@ -73,7 +73,8 @@ public class userlogin extends AppCompatActivity implements View.OnClickListener
                         progressDialog.dismiss();
 
                         if(task.isSuccessful()){
-                            //start Home Activity
+                            //start Home/Profile Activity
+                            startActivity(new Intent(this, userProfile.class));
 
                         }
 
