@@ -1,14 +1,14 @@
 package id.ac.pnj.foodless;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,18 +16,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 
 public class userRegister extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonRegisIndividu;
-    private EditText editNamaRegis;
-    private EditText editAddressRegis;
-    private EditText editNoTelpRegis;
-    private EditText editEmailRegis;
-    private EditText editPasswordRegis;
+    private EditText editNamaRegis, editAddressRegis, editNoTelpRegis, editEmailRegis, editPasswordRegis;
     private TextView textSignIn;
 
-    private ProgressDialog progressDialog;
+    private ProgressBar progressBar;
 
     private FirebaseAuth firebaseAuth;
 
@@ -38,7 +37,7 @@ public class userRegister extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        progressDialog = new ProgressDialog(this);
+        progressBar = findViewById(R.id.progress_regis);
 
         buttonRegisIndividu = findViewById(R.id.btn_register);
 
@@ -54,56 +53,111 @@ public class userRegister extends AppCompatActivity implements View.OnClickListe
         textSignIn.setOnClickListener(this);
     }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        if(firebaseAuth.getCurrentUser() != null)
+        {
+            startActivity(new Intent(userRegister.this, userProfile.class));
+        }
+    }
+
     private void registerUser(){
-        String nama = editNamaRegis.getText().toString().trim();
-        String address = editAddressRegis.getText().toString().trim();
-        String notelp = editNoTelpRegis.getText().toString().trim();
-        String email = editEmailRegis.getText().toString().trim();
-        String password = editPasswordRegis.getText().toString().trim();
+        final String nama = editNamaRegis.getText().toString().trim();
+        final String address = editAddressRegis.getText().toString().trim();
+        final String notelp = editNoTelpRegis.getText().toString().trim();
+        final String email = editEmailRegis.getText().toString().trim();
+        final String password = editPasswordRegis.getText().toString().trim();
 
-        if(TextUtils.isEmpty(nama)){
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+        if(nama.isEmpty()){
+            editNamaRegis.setError(getString(R.string.error_input_nama));
+            editNamaRegis.requestFocus();
             return;
         }
 
-        if (TextUtils.isEmpty(address)){
-            Toast.makeText(this, "Please enter your address", Toast.LENGTH_SHORT).show();
+        if (address.isEmpty()){
+            editAddressRegis.setError(getString(R.string.error_input_address));
+            editAddressRegis.requestFocus();
             return;
         }
 
-        if(TextUtils.isEmpty(notelp)){
-            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
+        if(notelp.isEmpty()){
+            editNoTelpRegis.setError(getString(R.string.error_input_phone));
+            editNoTelpRegis.requestFocus();
             return;
         }
 
-        if(TextUtils.isEmpty(email)){
-            //email is empty
-            Toast.makeText(this, "Please enter your e-mail", Toast.LENGTH_SHORT).show();
-            //stopping the function execution further
+        if(email.isEmpty()){
+            editEmailRegis.setError(getString(R.string.error_input_email));
+            editEmailRegis.requestFocus();
             return;
         }
 
-        if(TextUtils.isEmpty(password)){
-            //password is empty
-            Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
+        if(password.isEmpty()){
+            editPasswordRegis.setError(getString(R.string.error_input_password));
+            editPasswordRegis.requestFocus();
             return;
-            //stopping the fuction execution further
         }
 
-        //if validations are accepted, show a progress bar first
-        progressDialog.setMessage("Registering User...");
-        progressDialog.show();
+        progressBar.setVisibility(View.VISIBLE);
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            //user is successfully registered and logged in
-                            Toast.makeText(this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
+                            @SuppressLint("RestrictedApi") User user = new User (nama, email, address, notelp, password);
 
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                    public void onComplete(@NonNull Task<Void> task)
+                                    {
+                                        progressBar.setVisibility(View.GONE);
+                                        if (task.isSuccessful())
+                                        {
+                                            sendEmailVerif();
+
+                                        } else
+                                        {
+                                            Toast.makeText(userRegister.this, "Register failed", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                            });
+                    } else {
+                         Toast.makeText(userRegister.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private void sendEmailVerif()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                        {
+                            //email sent
+                            //after the email is sent, just log out the user and finish this activity
+                            firebaseAuth.signOut();
+                            Toast.makeText(userRegister.this, getString(R.string.succeed_register), Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(userRegister.this, userlogin.class));
+                            finish();
+                        }
+                        else
+                        {
+                            //email is not sent
+                            //restart this activity
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0,0);
+                            startActivity(getIntent());
                         }
                     }
                 });

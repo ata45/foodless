@@ -11,7 +11,14 @@
     <string name="choose_regis">Choose <b>One</b></string>
     <string name="login">Login</string>
     <string name="text_register">Dont have an account? Register <u> here</u> </string>
-
-
+    <string name="text_sign_in">Already have an account? Sign in <u>here</u> </string>
+    <string name="error_input_nama">Please enter your name</string>
+    <string name="error_input_email">Please enter your e-mail</string>
+    <string name="error_input_password">Please enter your password</string>
+    <string name="error_input_phone">Please enter your phone number</string>
+    <string name="error_input_address">Please enter your address</string>
+    <string name="succeed_register">Successfully Registered</string>
+    <string name="minimum_password">Password must be at least 8 characters long</string>
+    <string name="auth_failed">Authentication Failed</string>
 
 </resources>
