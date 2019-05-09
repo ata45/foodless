@@ -3,7 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="bgcolor">#EFDF9E</color>
+    <color name="bgcolor">#14632A</color>
     <color name="hijau">#006f3c</color>
     <color name="putih">#FFFFFF</color>
+    <color name="hitam">#000000</color>
 </resources>
