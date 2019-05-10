@@ -46,9 +46,9 @@ public class userRegister extends AppCompatActivity implements View.OnClickListe
         editAddressRegis = findViewById(R.id.edit_address_regis);
         editNoTelpRegis = findViewById(R.id.edit_notelp_regis);
         editEmailRegis = findViewById(R.id.edit_email_regis);
-        editPasswordRegis = findViewById(R.id.edit_password_regis);
-
-        textSignIn = findViewById(R.id.txt_sign_in);
+//        editPasswordRegis = findViewById(R.id.edit_password_regis);
+//
+//        textSignIn = findViewById(R.id.txt_sign_in);
 
         buttonRegisIndividu.setOnClickListener(this);
         textSignIn.setOnClickListener(this);
@@ -94,19 +94,19 @@ public class userRegister extends AppCompatActivity implements View.OnClickListe
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            //user is successfully registered and logged in
-                            Toast.makeText(this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
+//        firebaseAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if(task.isSuccessful()){
+//                            //user is successfully registered and logged in
+//                            Toast.makeText(this, "Successfully Registered", Toast.LENGTH_SHORT).show();
+//                        }else{
+//                            Toast.makeText(this, "Could not register. Please try again", Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    }
+//                });
     }
 
     @Override

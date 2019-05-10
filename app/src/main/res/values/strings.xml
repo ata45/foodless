@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">FoodLess</string>
-<<<<<<< HEAD
-=======
-    <string name="app_name">FoodLess</string>
->>>>>>> Intan
+
     <string name="register">REGISTER</string>
     <string name="full_name">Full Name</string>
     <string name="phone_number">Phone Number</string>
@@ -15,7 +12,7 @@
     <string name="choose_regis">Choose <b>One</b></string>
     <string name="login">Login</string>
     <string name="text_register">Dont have an account? Register <u> here</u> </string>
-<<<<<<< HEAD
+
     <string name="nama">Nama Restoran</string>
     <string name="kelamin">Kelamin</string>
     <string name="pria">Pria</string>
@@ -31,8 +28,6 @@
     <string name="telepon">Telepon</string>
     <string name="jenismakanan">Jenis Makanan</string>
     <string name="tanggalKadaluarsa">Tanggal Kadaluarsa</string>
-=======
 
->>>>>>> Intan
 
 </resources>

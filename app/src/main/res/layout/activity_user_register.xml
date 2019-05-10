@@ -78,7 +78,7 @@
                     android:src="@drawable/icon_profile" />
 
                 <EditText
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+
                     android:id="@+id/edit_nama_regis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                     android:src="@drawable/ic_address" />
 
                 <EditText
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+
                     android:id="@+id/edit_address_regis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                     android:src="@drawable/ic_phone" />
 
                 <EditText
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+
                     android:id="@+id/edit_notelp_regis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                     android:src="@drawable/ic_email" />
 
                 <EditText
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+
                     android:id="@+id/edit_email_regis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,7 +176,6 @@
                     android:src="@drawable/ic_password" />
 
                 <EditText
-                    style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
                     android:id="@+id/txt_password_regis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
