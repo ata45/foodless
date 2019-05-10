@@ -69,7 +69,7 @@ public class userRegister extends AppCompatActivity implements View.OnClickListe
         final String address = editAddressRegis.getText().toString().trim();
         final String notelp = editNoTelpRegis.getText().toString().trim();
         final String email = editEmailRegis.getText().toString().trim();
-        final String password = editPasswordRegis.getText().toString().trim();
+        String password = editPasswordRegis.getText().toString().trim();
 
         if(nama.isEmpty()){
             editNamaRegis.setError(getString(R.string.error_input_nama));
@@ -108,7 +108,7 @@ public class userRegister extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            @SuppressLint("RestrictedApi") User user = new User (nama, email, address, notelp, password);
+                            User user = new User (nama, email, address, notelp, password);
 
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
