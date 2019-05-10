@@ -44,7 +44,7 @@ public class userlogin extends AppCompatActivity implements View.OnClickListener
         buttonRegister = findViewById(R.id.btn_register);
 
         buttonLogin.setOnClickListener(this);
-        buttonRegister.setOnClickListener(this);
+//        buttonRegister.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
     }
